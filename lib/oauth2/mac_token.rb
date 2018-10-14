@@ -30,7 +30,7 @@ module OAuth2
     def initialize(client, token, secret, opts = {})
       @secret = secret
       @seq_nr = SecureRandom.random_number(2 ** 64 - 1)
-      @kid = opts.delete(:kid) || strict_encode64(Digest::SHA1.digest(token))
+      @kid = opts.delete(:kid) || Base64.strict_encode64(Digest::SHA1.digest(token))
       self.algorithm = opts.delete(:algorithm) || 'hmac-sha-256'
 
       super(client, token, opts)
